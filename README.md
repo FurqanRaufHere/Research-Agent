@@ -6,7 +6,7 @@ This repository contains an automated research agent that:
 - Exposes MCP-style tools via a FastAPI backend so LLM clients or the LangGraph orchestrator can call tools (search, extract, summarize, save).
 - Includes a Streamlit frontend that calls the LangGraph orchestrator (`/research/langgraph`) and displays results.
 
-This README_FULL.md contains quick setup, architecture, local demo, and deployment steps for Render (backend) and Streamlit Cloud (frontend).
+This README.md contains quick setup, architecture, local demo, and deployment steps for Render (backend) and Streamlit Cloud (frontend).
 
 ---
 
@@ -39,15 +39,6 @@ All orchestration logic is implemented with LangGraph nodes, and the tools are r
 ## Requirements & environment
 
 Install Python 3.10+ (3.11/3.13 tested locally). Create a virtual environment and install dependencies.
-
-Example (PowerShell):
-
-```powershell
-cd "D:\Buildables\Final Project"
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-```
 
 Environment variables (set locally or in hosting platform):
 
@@ -207,11 +198,3 @@ Contributions are welcome. Suggested workflow:
 3. Open a PR with a clear description.
 
 ---
-
-If you want, I can also:
-
-- Add a minimal `.github/workflows/python-app.yml` for CI.
-- Patch the extractor to include `User-Agent` + retry fallback and return search snippet on failure.
-- Create an example GitHub repo commit message and exact git commands to push.
-
-Tell me which of those you want next.
