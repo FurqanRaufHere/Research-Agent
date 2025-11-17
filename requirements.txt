@@ -1,0 +1,14 @@
+fastapi
+uvicorn[standard]
+sqlalchemy
+pydantic
+python-dotenv
+requests
+httpx
+langgraph
+streamlit
+jinja2
+python-multipart
+rich
+pyyaml
+typing-extensionsfastapi
