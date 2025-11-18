@@ -16,6 +16,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import os
 import json
+import logging
 from typing import List, Optional
 import requests
 from dotenv import load_dotenv
@@ -80,7 +81,27 @@ class SaveNoteIn(BaseModel):
 
 @app.on_event('startup')
 def startup_event():
+    """Initialize database and ensure data directory exists."""
+    import os
+    logger = logging.getLogger("startup")
+    
+    # Create data directory if it doesn't exist
+    db_path = os.environ.get('DATABASE_URL', 'sqlite:///./data/research_agent.db')
+    if db_path.startswith('sqlite:///'):
+        data_dir = os.path.dirname(db_path.replace('sqlite:///', './'))
+        if data_dir and data_dir != '.':
+            os.makedirs(data_dir, exist_ok=True)
+            logger.info(f"Ensured data directory exists: {data_dir}")
+    
+    # Validate API keys on startup
+    if not os.environ.get('GROQ_API_KEY'):
+        logger.warning("GROQ_API_KEY not set - LLM requests will fail")
+    if not os.environ.get('SERPAPI_KEY'):
+        logger.warning("SERPAPI_KEY not set - Web search will fail")
+    
+    logger.info("Initializing database...")
     init_db()
+    logger.info("Startup complete")
 
 
 def require_token(req: Request):
@@ -164,6 +185,11 @@ async def research_langgraph(payload: dict, token_check: bool = Depends(require_
             "report": result["report"]
         }
     except Exception as e:
+        import traceback
+        error_trace = traceback.format_exc()
+        logger = logging.getLogger("research_langgraph")
+        logger.error(f"LangGraph failed: {str(e)}\n{error_trace}")
+        print(f"ERROR in /research/langgraph: {str(e)}\n{error_trace}")
         log_mcp_event('/research/langgraph', json.dumps({"topic": topic, "error": str(e)}), 
                       json.dumps({"status": "failed"}))
         raise HTTPException(status_code=500, detail=f"Research failed: {str(e)}")
