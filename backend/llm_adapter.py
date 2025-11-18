@@ -5,7 +5,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
-MODEL_NAME = os.getenv("MODEL_NAME", "llama-3.1-70b-versatile")
+# Default to the intended model name; allow override via env var `MODEL_NAME`
+MODEL_NAME = os.getenv("MODEL_NAME", "llama-3.3-70b-versatile")
 
 class GROQAdapter:
     def __init__(self):
