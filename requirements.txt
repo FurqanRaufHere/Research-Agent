@@ -11,4 +11,4 @@ jinja2
 python-multipart
 rich
 pyyaml
-typing-extensionsfastapi
+typing-extensions
