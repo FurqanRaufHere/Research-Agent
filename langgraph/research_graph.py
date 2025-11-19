@@ -65,7 +65,7 @@ Topic: {state['topic']}"""
     
     plan_text = llm._request([{"role": "user", "content": prompt}])
     
-    # Parse subtopics
+    # Parse subtopicss
     subtopics = []
     for line in plan_text.strip().split('\n'):
         line = line.strip()
