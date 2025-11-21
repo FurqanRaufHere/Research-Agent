@@ -12,7 +12,7 @@ This README.md contains quick setup, architecture, local demo, and deployment st
 
 ## Table of contents
 
-- About the project
+- About the project.
 - Requirements & environment
 - Local setup & run
 - API endpoints and demo commands
